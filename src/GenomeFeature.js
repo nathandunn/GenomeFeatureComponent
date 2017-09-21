@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import './App.css'
+// import './App.css'
 import {scaleLinear} from "d3-scale";
 import {axisTop} from "d3-axis";
 import {select} from "d3-selection";
