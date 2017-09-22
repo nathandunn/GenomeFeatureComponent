@@ -9,8 +9,10 @@ import GenomeFeature from "../../src/GenomeFeature";
 
 class Demo extends Component {
 
-    jbrowseUrl = "http://demo.genomearchitect.org/Apollo-staging/Honeybee/jbrowse/index.html?loc=Group1.1:329115..330633&tracks=Official%20Gene%20Set%20v3.2";
-    dataUrl = "http://demo.genomearchitect.org/Apollo-staging/track/Honeybee/Official%20Gene%20Set%20v3.2/Group1.1/GB42168-RA.json";
+    // jbrowseUrl = "http://demo.genomearchitect.org/Apollo-staging/Honeybee/jbrowse/index.html?loc=Group1.1:329115..330633&tracks=Official%20Gene%20Set%20v3.2";
+    // dataUrl = "http://demo.genomearchitect.org/Apollo-staging/track/Honeybee/Official%20Gene%20Set%20v3.2/Group1.1/GB42168-RA.json";
+    jbrowseUrl = "http://jbrowse.alliancegenome.org/jbrowse/index.html?data=data%2FDanio%20rerio&tracks=All%20Genes&highlight=&lookupSymbol=sox9b";
+    dataUrl = 'http://demo.genomearchitect.org/Apollo-staging/track/Danio%20rerio/All%20Genes/3:62341796..62348451.json?name=sox9b';
     // dataUrl = "http://localhost:8080/apollo/track/Honeybee/Official%20Gene%20Set%20v3.2/Group1.1/GB42155-RA.json?ignoreCache=true";
     // dataUrl = "http://localhost:8080/apollo/track/Honeybee/Official%20Gene%20Set%20v3.2/Group1.1/GB42168-RA.json?ignoreCache=true";
     // dataUrl = "http://localhost:8080/apollo/track/Honeybee/Official%20Gene%20Set%20v3.2/Group1.1:329115..330633.json?ingoreCache=true";
