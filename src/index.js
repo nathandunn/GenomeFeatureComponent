@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-// import './App.css'
+//import React, {Component} from 'react'
+import './App.css'
 import {scaleLinear} from "d3-scale";
 import {axisTop} from "d3-axis";
 import {select} from "d3-selection";
@@ -89,10 +89,10 @@ export default class App extends Component {
             .attr("points", points)
             .attr("transform", function (d, i) {
                 if (d.strand > 0) {
-                    return "translate(" + Number(x(d.fmax) + 5) + "," + Number(20 + trans_height - line_width + 30 * i) + ")";
+                    return "translate(" + Number(x(d.fmax) + 5) + "," + Number(trans_height/2 - line_width + 30 * i) + ")";
                 }
                 else {
-                    return "translate(" + Number(x(d.fmin) - 5) + "," + Number(30 + trans_height - line_width + 30 * i) + ") rotate(180)";
+                    return "translate(" + Number(x(d.fmin) - 5) + "," + Number(trans_height - line_width + 30 * i) + ") rotate(180)";
                 }
 
             });
@@ -103,6 +103,7 @@ export default class App extends Component {
             console.log(exons);
 
             //This is hacky... idk why this works right now but its needed to get to object level.
+            //Hello
             exons.forEach(function (item) {
                 item.forEach(function (item2) {
 
