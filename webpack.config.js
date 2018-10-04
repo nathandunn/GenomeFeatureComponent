@@ -1,5 +1,4 @@
 var config = {
-    mode: "development",
     entry: {
         app: "./demo/src/JSDemo.js"
     },
