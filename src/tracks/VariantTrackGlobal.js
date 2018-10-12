@@ -58,22 +58,23 @@ export default class VariantTrack {
         .attr("stroke-width", 0).attr("stroke-opacity", 0);
 
         // Draw our variants
-        // Global Size based on amount of variants?
+        // TODO: Global Size based on amount of variants?
         track.selectAll("path").data(variants).enter().append("path")
             .attr("d", triangle)
             .attr("class", "global-variant")
             .attr("stroke", "red")
             .attr("fill", "red")
             .attr("transform", function(d) {
-                return "translate(" + x(d.position) + "," + 10 + ")";
+                return "translate(" + x(d.fmin) + "," + 10 + ")";
             });
         
     }
 
-    /* Method to get reference label */
-    async getTrackData()
+    /* Method to get variant data */
+    async getTrackData(track)
     {
+        console.log(track);
         let apolloService = new ApolloService()
-        this.variants =  await apolloService.GetFakeGlobalVariants();
+        this.variants =  await apolloService.GetVariants(track["genome"], undefined, track["chromosome"], track["start"], track["end"]);
     }
 }
