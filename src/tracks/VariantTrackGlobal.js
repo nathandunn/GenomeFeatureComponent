@@ -1,9 +1,9 @@
-import * as d3 from "d3"; 
+import * as d3 from "d3";
 import { ApolloService } from '../services/services';
 import d3Tip from "d3-tip";
 import {calculateNewTrackPosition} from '../RenderFunctions';
 
-export default class VariantTrack { 
+export default class VariantTrack {
 
     constructor(viewer, track, height, width){
         this.variants = [];
@@ -25,19 +25,19 @@ export default class VariantTrack {
         .domain([this.track["start"], this.track["end"]])
         .range(this.track["range"]);
         let triangle = d3.symbol().type(d3.symbolTriangle).size(20);
-    
+
         /*
         let tooltip = d3Tip();
         tooltip.attr('class', 'd3-tip').html(function(d) {
             let title = "Case Variant"
-            let tipHtml = 
-            '<table>' + 
+            let tipHtml =
+            '<table>' +
                 '<th colspan="2">' + title.toUpperCase() + '</th>' +
                 '<tr><td>Position</td> <td>' +  d["position"] + '</td></tr>' +
                 '<tr><td>Mutation</td> <td>' +  d["ref"] + ' > ' + d["mutant"] + '</td></tr>'
             '</table>';
-            return tipHtml; 
-        
+            return tipHtml;
+
         }).offset([10,0]).direction('s');
         viewer.call(tooltip);
         */
@@ -67,14 +67,15 @@ export default class VariantTrack {
             .attr("transform", function(d) {
                 return "translate(" + x(d.fmin) + "," + 10 + ")";
             });
-        
+
     }
 
     /* Method to get variant data */
     async getTrackData(track)
     {
         console.log(track);
-        let apolloService = new ApolloService("http://localhost:8090/apollo")
+        // let apolloService = new ApolloService("http://localhost:8090/apollo")
+        let apolloService = new ApolloService("http://demo.genomearchitect.org/Apollo2")
         this.variants =  await apolloService.GetVariants(track["genome"], [track["name"]], track["chromosome"], track["start"], track["end"]);
     }
 }
