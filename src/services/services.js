@@ -4,9 +4,13 @@ class ApolloService
     * ApolloService Class
     * 
     */
-    constructor(){ }
+    constructor(baseUrl){
+        // set URL for Apollo instance
+        this.baseUrl = baseUrl;
+    }
 
     GetIsoformTrack(url){
+        // TODO: use baseUrl
         return new Promise((resolve, reject) =>{
             fetch(url).then((response) => {
                 resolve(response.json())
@@ -17,7 +21,7 @@ class ApolloService
     }
 
     GetLocalSequence(build, chromosome, start, end){
-        let url = "http://demo.genomearchitect.org/Apollo2/sequence/Human-Hg38/chr" + chromosome + ":" + start + ".." + end
+        let url = this.baseUrl +  "/sequence/" + build + "/" + chromosome + ":" + start + ".." + end
         return new Promise((resolve, reject)=>{
             fetch(url).then((response) =>{
                 resolve(response.text());
@@ -34,8 +38,7 @@ class ApolloService
         }
 
         for (let track of tracks) {
-            console.log(track);
-            let data = await this.GetVariantsFromTrack(build, track['label'], chromosome, start, end);
+            let data = await this.GetVariantsFromTrack(build, track, chromosome, start, end);
             variants = variants.concat(data);
         }
         console.log("Variants fetched: ", variants);
@@ -43,7 +46,7 @@ class ApolloService
     }
 
     GetVariantsFromTrack(build, trackLabel, chromosome, start, end){
-        let url = "http://demo.genomearchitect.org/Apollo2" + "/vcf/" + encodeURI(build) + "/" + encodeURI(trackLabel) + "/" + chromosome + ":" + start + ".." + end + ".json";
+        let url = this.baseUrl + "/vcf/" + encodeURI(build) + "/" + encodeURI(trackLabel) + "/" + chromosome + ":" + start + ".." + end + ".json";
         return new Promise((resolve, reject)=> {
             fetch(url).then((response) =>{
                 resolve(response.json());
@@ -65,7 +68,7 @@ class ApolloService
     }
 
     GetTrackList(build){
-        let url = "http://demo.genomearchitect.org/Apollo2/track/list/" + encodeURI(build);
+        let url = this.baseUrl + "/track/list/" + encodeURI(build);
         return new Promise((resolve, reject)=> {
             fetch(url).then((response) =>{
                 resolve(response.json());
@@ -73,60 +76,6 @@ class ApolloService
                 reject(error);
             })
         });
-    }
-    // Our variant endpoint should take a range on a chromosome
-    // and return all the variants that fall within that range
-    GetFakeVariants(chromosome, start, end){
-        let fakeVariants = [
-            {
-                "position": 48515449,
-                "ref": "G",
-                "mutant":"A"
-            },
-            {
-                "position": 48515458,
-                "ref": "T",
-                "mutant":"C"
-            },
-            {
-                "position": 48515461,
-                "ref": "A",
-                "mutant":"G"
-            },
-            {
-                "position": 48515500,
-                "ref": "C",
-                "mutant":"A"
-            }
-        ]
-        return fakeVariants;
-    }
-
-    // Fake globll variant track
-    GetFakeGlobalVariants(chromosome, start, end){
-        let fakeVariants = [
-            {
-                "position": 75575916,
-                "ref": "G",
-                "mutant":"A"
-            },
-            {
-                "position": 75575056,
-                "ref": "T",
-                "mutant":"C"
-            },
-            {
-                "position": 75645056,
-                "ref": "A",
-                "mutant":"G"
-            },
-            {
-                "position": 75655056,
-                "ref": "C",
-                "mutant":"A"
-            }
-        ]
-        return fakeVariants;
     }
 }
 
