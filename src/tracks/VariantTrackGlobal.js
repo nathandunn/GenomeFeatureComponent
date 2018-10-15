@@ -74,7 +74,7 @@ export default class VariantTrack {
     async getTrackData(track)
     {
         console.log(track);
-        let apolloService = new ApolloService()
-        this.variants =  await apolloService.GetVariants(track["genome"], undefined, track["chromosome"], track["start"], track["end"]);
+        let apolloService = new ApolloService("http://localhost:8090/apollo")
+        this.variants =  await apolloService.GetVariants(track["genome"], [track["name"]], track["chromosome"], track["start"], track["end"]);
     }
 }

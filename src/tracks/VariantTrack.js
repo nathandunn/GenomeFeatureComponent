@@ -29,12 +29,12 @@ export default class VariantTrack {
         // Tooltip configuration
         let tooltip = d3Tip();
         tooltip.attr('class', 'd3-tip').html(function(d) {
-            let title = "Case Variant"
+            let title = d["type"]
             let tipHtml = 
             '<table>' + 
                 '<th colspan="2">' + title.toUpperCase() + '</th>' +
-                '<tr><td>Position</td> <td>' +  d["position"] + '</td></tr>' +
-                '<tr><td>Mutation</td> <td>' +  d["ref"] + ' > ' + d["mutant"] + '</td></tr>'
+                '<tr><td>Position</td> <td>' +  d["fmin"] + '</td></tr>' +
+                '<tr><td>Mutation</td> <td>' +  d["description"] + '</td></tr>'
             '</table>';
             return tipHtml; 
         
@@ -62,7 +62,7 @@ export default class VariantTrack {
             .attr("stroke", "red")
             .attr("fill", "red")
             .attr("transform", function(d) {
-                return "translate(" + x(d.position) + "," + 10 + ")";
+                return "translate(" + x(d.fmin) + "," + 10 + ")";
             }).on('mouseenter', tooltip.show).on('mouseout', tooltip.hide);
         
         // Track Label Boxes currently 100px
@@ -71,14 +71,14 @@ export default class VariantTrack {
         .attr("class", "track-label");        
         trackLabel.append("line").attr("x1", 75).attr("y1", 0).attr("x2", 75).attr("y2", trackHeight).attr("stroke-width", 3)
         .attr("stroke", "#609C9C");
-        trackLabel.append("text").text(this.track["label"].toUpperCase()).attr("y", 12);
+        trackLabel.append("text").text(this.track["displayLabel"].toUpperCase()).attr("y", 12);
         
     }
 
     /* Method to get reference label */
-    async getTrackData()
+    async getTrackData(track)
     {
-        let apolloService = new ApolloService()
-        this.variants =  await apolloService.GetFakeVariants();
+        let apolloService = new ApolloService("http://localhost:8090/apollo")
+        this.variants =  await apolloService.GetVariants(track["genome"], [track["trackLabel"]], track["chromosome"], track["start"], track["end"]);
     }
 }
