@@ -61,7 +61,7 @@ export default class Drawer {
         // Draw our reference if it's local for now.
         console.log("[GCLog] Drawing reference..");
         const referenceTrack = new ReferenceTrack(viewer,  
-            {"chromosome": chromosome, "start": start, "end": end, "range": sequenceOptions["range"]}, 
+            {"genome": options["genome"], "chromosome": chromosome, "start": start, "end": end, "range": sequenceOptions["range"]}, 
             height, width);
         if(locale == "local")
         {

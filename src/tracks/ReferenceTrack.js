@@ -80,9 +80,9 @@ export default class ReferenceTrack {
     async getTrackData()
     {
         let track = this.track;
-        let apolloService = new ApolloService();
+        let apolloService = new ApolloService("http://localhost:8090/apollo");
         try{
-            this.refSeq = await apolloService.GetLocalSequence("", track["chromosome"], track["start"], track["end"]);
+            this.refSeq = await apolloService.GetLocalSequence(track["genome"], track["chromosome"], track["start"], track["end"]);
         }catch(err){
             console.error(err);
         }
