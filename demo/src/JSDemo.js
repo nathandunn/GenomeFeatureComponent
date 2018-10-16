@@ -33,6 +33,16 @@ let configGlobal = {
         //     ]
         // },
         {
+            "id": 1,
+            "genome": "Homo sapiens",
+            "type": "isoform",
+            "url": [
+                "https://agr-apollo.berkeleybop.io/apollo/track/",
+                "/All Genes/",
+                ".json"
+            ]
+        },
+        {
             "id": 2,
             "genome": "Human-Hg38",
             "type": "variant-global",
@@ -40,16 +50,6 @@ let configGlobal = {
             "url": [
                 "http://demo.genomearchitect.org/Apollo2/vcf/",
                 "/dbsnps/",
-                ".json"
-            ]
-        },
-        {
-            "id": 1,
-            "genome": "Homo sapiens",
-            "type": "isoform",
-            "url": [
-                "https://agr-apollo.berkeleybop.io/apollo/track/",
-                "/All Genes/",
                 ".json"
             ]
         },

@@ -66,7 +66,21 @@ export default class VariantTrack {
             .attr("fill", "red")
             .attr("transform", function(d) {
                 return "translate(" + x(d.fmin) + "," + 10 + ")";
-            });
+            })
+            .append("line")
+            .attr("x1", 0)
+            .attr("y1", 0)
+            .attr("y2", 10)
+            .attr("x2", 0)
+            .attr("class", "global-variant")
+            .attr("stroke", "black")
+            .attr("stroke-width", 4)
+            .attr("fill", "gray")
+            .attr("transform", function(d) {
+                return "translate(" + x(d.fmin) + "," + 10 + ")";
+            })
+        ;
+        // track.selectAll("path").data(variants).enter()
 
     }
 
