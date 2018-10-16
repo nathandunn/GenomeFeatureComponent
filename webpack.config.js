@@ -3,7 +3,7 @@ var config = {
         app: "./demo/src/JSDemo.js"
     },
     output: {
-        filename: "bundle.js"
+        filename: "./demo/src/bundle.js"
     },
     devServer: {
         contentBase: './demo/src/'

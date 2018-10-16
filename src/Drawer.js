@@ -2,8 +2,9 @@
 import IsoformTrack from './tracks/IsoformTrack';
 import ReferenceTrack from './tracks/ReferenceTrack';
 import VariantTrack from './tracks/VariantTrack';
-import VariantTrackGlobal from './tracks/VariantTrackGlobal'
+import VariantTrackGlobal from './tracks/VariantTrackGlobal';
 import * as d3 from "d3";
+import { getTranslate } from './RenderFunctions';
 /*
 *   Main Drawing class
 *   @Param viewer: the entire viewer
@@ -162,7 +163,7 @@ export default class Drawer {
         // the distance of a tick.
         let viewerTracks = ref.gfc["svg_target"] + " .main-view .track";
         d3.selectAll(viewerTracks).attr("transform",function(){
-            let trs = ref.getTranslate(d3.select(this).attr("transform"));
+            let trs = getTranslate(d3.select(this).attr("transform"));
             let newX = 0;
             if(direction == 1)
             {
@@ -181,26 +182,6 @@ export default class Drawer {
 
             return "translate(" + newX +"," + trs[1] + ")";
         });
-    }
-
-    // Nasty function to get translate values since d3 deprecated.
-    getTranslate(transform) 
-    {
-        // Create a dummy g for calculation purposes only. This will never
-        // be appended to the DOM and will be discarded once this function 
-        // returns.
-        var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        
-        // Set the transform attribute to the provided string value.
-        g.setAttributeNS(null, "transform", transform);
-        
-        // consolidate the SVGTransformList containing all transformations
-        // to a single SVGTransform of type SVG_TRANSFORM_MATRIX and get
-        // its SVGMatrix. 
-        var matrix = g.transform.baseVal.consolidate().matrix;
-        
-        // As per definition values e and f are the ones for the translation.
-        return [matrix.e, matrix.f];
     }
 
     /* 

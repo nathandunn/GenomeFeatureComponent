@@ -14,7 +14,7 @@ export default class ReferenceTrack {
         this.height = height;
         this.track = track;
     }
-
+    
     DrawScrollableTrack()
     {
         let viewer = this.viewer;
@@ -28,10 +28,10 @@ export default class ReferenceTrack {
         let xAxis = d3.axisBottom(x).tickValues( this._getRefTick(this.track["start"] + 1, this.track["end"]) )
         .tickFormat(function(d,i){ return data[i] }).tickSize(8).tickSizeInner(8).tickPadding(6);
 
-        //Set sequence length ticks
+        // Set sequence length ticks
         let numTicks = Math.floor(data.length / 10)
-        let xAxisNumerical = d3.axisTop(x).ticks(numTicks).tickValues(this._getRefTick(this.track["start"] + 1, this.track["end"], 10));
-
+        let xAxisNumerical = d3.axisTop(x).ticks(numTicks)
+        .tickValues(this._getRefTick(this.track["start"] + 1, this.track["end"], 10));
 
         viewer.append('g')
             .attr('class', 'axis x-local-axis track')
@@ -44,7 +44,11 @@ export default class ReferenceTrack {
             .attr('width', this.track["range"][1])
             .attr('transform', 'translate(0, 20)')
             .call(xAxisNumerical);
-
+        
+        let numericTickLabel = d3.selectAll(".x-local-numerical .tick text");
+        numericTickLabel.first().attr("text-anchor", "start");
+        numericTickLabel.last().attr("text-anchor", "end");
+        
         // For each tick 
         d3.selectAll(".x-local-axis .tick text").each(function(d, i){
             // Get the current tick
@@ -63,7 +67,8 @@ export default class ReferenceTrack {
             {
                 rectClass = "nucleotide nt-g"
             }
-            // Get the parent tick and create a box?
+            // Get the parent tick and create a box to color
+            // code the nucleotides
             d3.select(this.parentNode).append("rect")
             .attr("class", rectClass).attr("transform", "translate(-8,8)");
 
