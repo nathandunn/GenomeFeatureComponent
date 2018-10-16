@@ -3,11 +3,13 @@ import { ApolloService } from '../../src/services/services';
 
 // Global View Example
 
+let url = 'https://agr-apollo.berkeleybop.io/apollo/track/Homo%20sapiens/All%20Genes/17:43044295..43125483.json?name=1100&name=BRCA1&name=BRCA1/BRCA2-containing%20complex,%20subunit%201&name=BRCAI&name=BRCC1&name=breast%20and%20ovarian%20cancer%20susceptibility%20protein%201&name=breast%20cancer%201&name=breast%20cancer%201,%20early%20onset&name=breast%20cancer%20type%201%20susceptibility%20protein&name=BROVCA1&name=early%20onset%20breast%20cancer%201&name=Fanconi%20anemia,%20complementation%20group%20S&name=FANCS&name=IRIS&name=OTTHUMP00000212143&name=OTTHUMP00000212147&name=OTTHUMP00000212148&name=OTTHUMP00000212149&name=OTTHUMP00000212150&name=OTTHUMP00000212151&name=OTTHUMP00000212155&name=PNCA4&name=PPP1R53&name=protein%20phosphatase%201,%20regulatory%20subunit%2053&name=PSCP&name=RING%20finger%20protein%2053&name=RNF53&name=truncated%20BRCA1&name=truncated%20breast%20and%20ovarian%20cancer%20susceptibility%20protein%201&name=truncated%20breast%20cancer%201';
+
 let configGlobal = {
     "locale": "global",
-    "chromosome": "chr1",
-    "start": 119886060,
-    "end": 119886981,
+    "chromosome": "chr17",
+    "start": 42907412,
+    "end": 42907653,
     "tracks": [
         // {
         //     "id": 2,
@@ -43,14 +45,24 @@ let configGlobal = {
         },
         {
             "id": 1,
-            "genome": "Human-Hg38",
+            "genome": "Homo sapiens",
             "type": "isoform",
             "url": [
-                "http://demo.genomearchitect.org/Apollo2/track/",
-                "/GenBank TopLevel MRNA/",
+                "https://agr-apollo.berkeleybop.io/apollo/track/",
+                "/All Genes/",
                 ".json"
             ]
         },
+        // {
+        //     "id": 1,
+        //     "genome": "Human-Hg38",
+        //     "type": "isoform",
+        //     "url": [
+        //         "http://demo.genomearchitect.org/Apollo2/track/",
+        //         "/GenBank TopLevel MRNA/",
+        //         ".json"
+        //     ]
+        // },
     ]
 };
 

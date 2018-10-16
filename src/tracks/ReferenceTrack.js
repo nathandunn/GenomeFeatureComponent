@@ -54,8 +54,8 @@ export default class ReferenceTrack {
 
 
         let xAxis = d3.axisTop(x)
-            .ticks(8, 's')
-            .tickSize(8)
+            .ticks(4, 's')
+            .tickSize(4)
             //.tickFormat(5, resolutionString);
 
         viewer.append('g')

@@ -22,7 +22,7 @@ class ApolloService {
     GetLocalSequence(build, chromosome, start, end) {
         let url = this.baseUrl + "/sequence/" + build + "/" + chromosome + ":" + start + ".." + end
         return new Promise((resolve, reject) => {
-            fetch(url, {mode: 'no-cors'}).then((response) => {
+            fetch(url).then((response) => {
                 resolve(response.text());
             }).catch(error => {
                 reject(error);
@@ -47,7 +47,7 @@ class ApolloService {
     GetVariantsFromTrack(build, trackLabel, chromosome, start, end) {
         let url = this.baseUrl + "/vcf/" + encodeURI(build) + "/" + encodeURI(trackLabel) + "/" + chromosome + ":" + start + ".." + end + ".json";
         return new Promise((resolve, reject) => {
-            fetch(url, {mode: 'no-cors'}).then((response) => {
+            fetch(url).then((response) => {
                 resolve(response.json());
             }).catch(error => {
                 reject(error);
@@ -69,7 +69,7 @@ class ApolloService {
     GetTrackList(build) {
         let url = this.baseUrl + "/track/list/" + encodeURI(build);
         return new Promise((resolve, reject) => {
-            fetch(url, {mode: 'no-cors'}).then((response) => {
+            fetch(url).then((response) => {
                 resolve(response.json());
             }).catch(error => {
                 reject(error);
