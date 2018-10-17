@@ -61,7 +61,7 @@ export default class Drawer {
         // Draw our reference if it's local for now.
         console.log("[GCLog] Drawing reference..");
         const referenceTrack = new ReferenceTrack(viewer,  
-            {"chromosome": chromosome, "start": start, "end": end, "range": sequenceOptions["range"]}, 
+            {"genome": options["genome"], "chromosome": chromosome, "start": start, "end": end, "range": sequenceOptions["range"]}, 
             height, width);
         if(locale == "local")
         {
@@ -94,12 +94,12 @@ export default class Drawer {
             {
                 track["range"] = sequenceOptions["range"];
                 const variantTrack = new VariantTrack(viewer, track, height, width);
-                await variantTrack.getTrackData();
+                await variantTrack.getTrackData(track);
                 variantTrack.DrawTrack();
             }else if(track.type == "variant-global"){
                 track["range"] = sequenceOptions["range"];
                 const variantTrack = new VariantTrackGlobal(viewer, track, height, width);
-                await variantTrack.getTrackData();
+                await variantTrack.getTrackData(track);
                 variantTrack.DrawTrack();
             }
             else

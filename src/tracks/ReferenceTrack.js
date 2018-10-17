@@ -5,7 +5,7 @@ import { ApolloService } from '../services/services';
 /*
     The reference sequence label track.
 */
-export default class ReferenceTrack { 
+export default class ReferenceTrack {
 
     constructor(viewer, track, height, width){
         this.refSeq = "";
@@ -33,7 +33,7 @@ export default class ReferenceTrack {
             .attr('width', this.track["range"][1])
             .attr('transform', 'translate(0, 10)')
             .call(xAxis);
-            
+
     }
 
     DrawOverviewTrack(){
@@ -45,17 +45,17 @@ export default class ReferenceTrack {
         let x = d3.scaleLinear()
         .domain([view_start, view_end])
         .range(this.track["range"]);
-    
+
         let viewLength = view_end - view_start;
        // let resolution = Math.round(30 / Math.log(viewLength)) ;
         //let resolutionString = '.'+resolution + 's';
         //let tickFormat = x.tickFormat(5, resolutionString);
 
-       
+
 
         let xAxis = d3.axisTop(x)
-            .ticks(8, 's')
-            .tickSize(8)
+            .ticks(4, 's')
+            .tickSize(4)
             //.tickFormat(5, resolutionString);
 
         viewer.append('g')
@@ -80,9 +80,10 @@ export default class ReferenceTrack {
     async getTrackData()
     {
         let track = this.track;
-        let apolloService = new ApolloService();
+        let apolloService = new ApolloService("http://demo.genomearchitect.org/Apollo2")
+        // let apolloService = new ApolloService("http://localhost:8090/apollo");
         try{
-            this.refSeq = await apolloService.GetLocalSequence("", track["chromosome"], track["start"], track["end"]);
+            this.refSeq = await apolloService.GetLocalSequence(track["genome"], track["chromosome"], track["start"], track["end"]);
         }catch(err){
             console.error(err);
         }
