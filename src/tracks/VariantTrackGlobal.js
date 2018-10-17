@@ -62,7 +62,7 @@ export default class VariantTrack {
         let baseline = -8 ;
         let widget_width = 10  ;
         let widget_height = 10  ;
-        let line_height = 100 ;
+        let line_height = 30 ;
         let apath = "M 0 10 L -10 0 L 10 0 L 0 10 0 -100";
         let path = "M 0 "+widget_width + " L -"+widget_width+" "+baseline +" L "+widget_width +"  "+baseline +" L 0 "+widget_height +" 0 -"+line_height;
         console.log(apath)

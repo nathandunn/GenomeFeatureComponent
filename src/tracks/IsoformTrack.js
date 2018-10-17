@@ -1,32 +1,32 @@
 import * as d3 from "d3";
-import { countIsoforms, findRange, checkSpace, calculateNewTrackPosition } from '../RenderFunctions';
-import { ApolloService } from '../services/services';
+import {countIsoforms, findRange, checkSpace, calculateNewTrackPosition} from '../RenderFunctions';
+import {ApolloService} from '../services/services';
 
-export default class IsoformTrack{
+export default class IsoformTrack {
 
-    constructor(viewer, track, height, width){
+    constructor(viewer, track, height, width) {
         this.trackData = {};
         this.viewer = viewer;
         this.width = width;
         this.height = height;
         this.getTrackData(track);
     }
+
     // Draw our track on the viewer
     // TODO: Potentially seperate this large section of code
     // for both testing/extensibility
-    DrawTrack()
-    {
+    DrawTrack() {
         let viewer = this.viewer;
         let data = this.trackData;
         let width = this.width;
         let MAX_ROWS = 10;
         let calculatedHeight = 500;
 
-        let UTR_feats= ["UTR","five_prime_UTR","three_prime_UTR"];
-        let CDS_feats= ["CDS"];
-        let exon_feats= ["exon"];
-        let display_feats=["mRNA"];
-        let dataRange = findRange(data,display_feats);
+        let UTR_feats = ["UTR", "five_prime_UTR", "three_prime_UTR"];
+        let CDS_feats = ["CDS"];
+        let exon_feats = ["exon"];
+        let display_feats = ["mRNA"];
+        let dataRange = findRange(data, display_feats);
 
         let view_start = dataRange.fmin;
         let view_end = dataRange.fmax;
@@ -50,14 +50,14 @@ export default class IsoformTrack{
 
         //need to build a new sortWeight since these can be dynamic
         let sortWeight = {};
-        for(var i=0,len = UTR_feats.length; i <len; i++){
-            sortWeight[UTR_feats[i]]=200;
+        for (var i = 0, len = UTR_feats.length; i < len; i++) {
+            sortWeight[UTR_feats[i]] = 200;
         }
-        for(var i=0,len = CDS_feats.length; i <len; i++){
-            sortWeight[CDS_feats[i]]=1000;
+        for (var i = 0, len = CDS_feats.length; i < len; i++) {
+            sortWeight[CDS_feats[i]] = 1000;
         }
-        for(var i=0,len = exon_feats.length; i <len; i++){
-            sortWeight[exon_feats[i]]=100;
+        for (var i = 0, len = exon_feats.length; i < len; i++) {
+            sortWeight[exon_feats[i]] = 100;
         }
 
         //Testing if the countIsoforms function is broked
@@ -70,10 +70,10 @@ export default class IsoformTrack{
             calculatedHeight = (numberIsoforms + 1) * isoform_height;
         }
 
-        let row_count =0;
+        let row_count = 0;
         let used_space = [];
-        let fmin_display=-1;
-        let fmax_display=-1;
+        let fmin_display = -1;
+        let fmax_display = -1;
         // **************************************
         // FOR NOW LETS FOCUS ON ONE GENE ISOFORM
         // **************************************
@@ -99,7 +99,7 @@ export default class IsoformTrack{
                 //
                 let featureType = featureChild.type;
 
-                if (display_feats.indexOf(featureType)>=0) {
+                if (display_feats.indexOf(featureType) >= 0) {
                     //function to assign row based on available space.
                     // *** DANGER EDGE CASE ***/
                     let current_row = checkSpace(used_space, x(featureChild.fmin), x(featureChild.fmax));
@@ -107,11 +107,11 @@ export default class IsoformTrack{
                     if (current_row < maxRows) {
                         // An isoform container
                         let isoform = track.append("g").attr("class", "isoform")
-                        .attr("transform","translate(0," + ((row_count * isoform_height) + 10) +")")
+                            .attr("transform", "translate(0," + ((row_count * isoform_height) + 10) + ")")
 
                         isoform.append("polygon")
-                            .datum(function(){
-                                return {fmin: featureChild.fmin, fmax: featureChild.fmax, strand:feature.strand};
+                            .datum(function () {
+                                return {fmin: featureChild.fmin, fmax: featureChild.fmax, strand: feature.strand};
                             })
                             .attr('class', 'transArrow')
                             .attr('points', arrow_points)
@@ -120,7 +120,7 @@ export default class IsoformTrack{
                                     return 'translate(' + Number(x(d.fmax)) + ',0)';
                                 }
                                 else {
-                                    return 'translate('+Number(x(d.fmin))+',0) rotate(180)';
+                                    return 'translate(' + Number(x(d.fmin)) + ',0) rotate(180)';
                                 }
                             });
 
@@ -128,33 +128,33 @@ export default class IsoformTrack{
                             .attr('class', 'transcriptBackbone')
                             .attr('y', 10 + isoform_title_height)
                             .attr('height', transcript_backbone_height)
-                            .attr("transform","translate(" + x(featureChild.fmin) + ",0)")
+                            .attr("transform", "translate(" + x(featureChild.fmin) + ",0)")
                             .attr('width', x(featureChild.fmax) - x(featureChild.fmin))
-                            .datum({fmin: featureChild.fmin,fmax: featureChild.fmax});
+                            .datum({fmin: featureChild.fmin, fmax: featureChild.fmax});
 
                         var text_label = isoform.append('text')
                             .attr('class', 'transcriptLabel')
                             .attr('fill', selected ? 'sandybrown' : 'gray')
                             .attr('opacity', selected ? 1 : 0.5)
                             .attr('height', isoform_title_height)
-                            .attr("transform","translate(" + x(featureChild.fmin) + ",0)")
+                            .attr("transform", "translate(" + x(featureChild.fmin) + ",0)")
                             .text(featureChild.name + " (" + feature.name + ")")
-                            .datum({fmin:featureChild.fmin});
+                            .datum({fmin: featureChild.fmin});
 
                         //Now that the label has been created we can calculate the space that
                         //this new element is taking up making sure to add in the width of
                         //the box.
                         var text_width = text_label.node().getBBox().width;
                         //First check to see if label goes past the end
-                        if (Number(text_width+x(featureChild.fmin))>width){
-                            console.log(featureChild.name+" goes over the edge");
+                        if (Number(text_width + x(featureChild.fmin)) > width) {
+                            console.log(featureChild.name + " goes over the edge");
                         }
                         let feat_end;
-                        if(text_width>x(featureChild.fmax)-x(featureChild.fmin)){
-                            feat_end=x(featureChild.fmin)+text_width;
+                        if (text_width > x(featureChild.fmax) - x(featureChild.fmin)) {
+                            feat_end = x(featureChild.fmin) + text_width;
                         }
                         else {
-                            feat_end=x(featureChild.fmax);
+                            feat_end = x(featureChild.fmax);
                         }
 
                         //This is probably not the most efficent way to do this.
@@ -162,21 +162,21 @@ export default class IsoformTrack{
                         //next level is each element taking up space.
                         //Also using colons as spacers seems very perl... maybe change that?
                         // *** DANGER EDGE CASE ***/
-                        if (used_space[current_row]){
+                        if (used_space[current_row]) {
                             let temp = used_space[current_row];
-                            temp.push(x(featureChild.fmin)+":"+feat_end);
-                            used_space[current_row]= temp;
+                            temp.push(x(featureChild.fmin) + ":" + feat_end);
+                            used_space[current_row] = temp;
                         }
                         else {
-                            used_space[current_row]=[x(featureChild.fmin)+":"+feat_end]
+                            used_space[current_row] = [x(featureChild.fmin) + ":" + feat_end]
                         }
 
                         //Now check on bounds since this feature is displayed
                         //The true end of display is converted to bp.
-                        if(fmin_display < 0 ||fmin_display > featureChild.fmin){
+                        if (fmin_display < 0 || fmin_display > featureChild.fmin) {
                             fmin_display = featureChild.fmin;
                         }
-                        if(fmax_display<0 || fmax_display < featureChild.fmax){
+                        if (fmax_display < 0 || fmax_display < featureChild.fmax) {
                             fmax_display = featureChild.fmax;
                         }
 
@@ -201,35 +201,35 @@ export default class IsoformTrack{
 
                         featureChild.children.forEach(function (innerChild) {
                             let innerType = innerChild.type;
-                            if (exon_feats.indexOf(innerType)>=0) {
+                            if (exon_feats.indexOf(innerType) >= 0) {
                                 isoform.append('rect')
                                     .attr('class', 'exon')
                                     .attr('x', x(innerChild.fmin))
-                                    .attr('transform', 'translate(0,' + (exon_height - transcript_backbone_height ) + ')')
+                                    .attr('transform', 'translate(0,' + (exon_height - transcript_backbone_height) + ')')
                                     .attr('height', exon_height)
                                     .attr('z-index', 10)
                                     .attr('width', x(innerChild.fmax) - x(innerChild.fmin))
-                                    .datum({fmin: innerChild.fmin,fmax: innerChild.fmax});
+                                    .datum({fmin: innerChild.fmin, fmax: innerChild.fmax});
                             }
-                            else if (CDS_feats.indexOf(innerType)>=0) {
+                            else if (CDS_feats.indexOf(innerType) >= 0) {
                                 isoform.append('rect')
                                     .attr('class', 'CDS')
                                     .attr('x', x(innerChild.fmin))
-                                    .attr('transform', 'translate(0,' +  (cds_height - transcript_backbone_height) + ')')
+                                    .attr('transform', 'translate(0,' + (cds_height - transcript_backbone_height) + ')')
                                     .attr('z-index', 20)
                                     .attr('height', cds_height)
                                     .attr('width', x(innerChild.fmax) - x(innerChild.fmin))
-                                    .datum({fmin: innerChild.fmin,fmax: innerChild.fmax});
+                                    .datum({fmin: innerChild.fmin, fmax: innerChild.fmax});
                             }
-                            else if (UTR_feats.indexOf(innerType)>=0) {
+                            else if (UTR_feats.indexOf(innerType) >= 0) {
                                 isoform.append('rect')
                                     .attr('class', 'UTR')
                                     .attr('x', x(innerChild.fmin))
-                                    .attr('transform', 'translate(0,' + (utr_height - transcript_backbone_height ) + ')')
+                                    .attr('transform', 'translate(0,' + (utr_height - transcript_backbone_height) + ')')
                                     .attr('z-index', 20)
                                     .attr('height', utr_height)
                                     .attr('width', x(innerChild.fmax) - x(innerChild.fmin))
-                                    .datum({fmin: innerChild.fmin,fmax: innerChild.fmax});
+                                    .datum({fmin: innerChild.fmin, fmax: innerChild.fmax});
                             }
                         });
                         row_count += 1;
@@ -260,18 +260,19 @@ export default class IsoformTrack{
                 .text('Overview of non-coding genome features unavailable at this time.');
 
         }
-  }
+    }
 
-  /* Method for isoformTrack service call */
-  getTrackData(track)
-  {
-    // let externalLocationString = track["chromosome"] + ':' + track["start"] + '..' + track["end"];
-      let externalLocationString = 17 + ':' + track["start"] + '..' + track["end"];
-    var dataUrl = track["url"][0] + encodeURI(track["genome"]) + track["url"][1] + encodeURI(externalLocationString) + track["url"][2];
-    let apolloService = new ApolloService()
-    apolloService.GetIsoformTrack(dataUrl).then((data) =>{
+    /* Method for isoformTrack service call */
+    getTrackData(track) {
+        // let externalLocationString = track["chromosome"] + ':' + track["start"] + '..' + track["end"];
+        let chromosomeString = track["chromosome"];
+        chromosomeString = chromosomeString.toLowerCase().indexOf("chr") === 0 ? chromosomeString.substr(3) : chromosomeString;
+        let externalLocationString = chromosomeString + ':' + track["start"] + '..' + track["end"];
+        var dataUrl = track["url"][0] + encodeURI(track["genome"]) + track["url"][1] + encodeURI(externalLocationString) + track["url"][2];
+        let apolloService = new ApolloService()
+        apolloService.GetIsoformTrack(dataUrl).then((data) => {
             this.trackData = data;
             this.DrawTrack();
-    });
-  }
+        });
+    }
 }
