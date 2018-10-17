@@ -59,28 +59,38 @@ export default class VariantTrack {
 
         // Draw our variants
         // TODO: Global Size based on amount of variants?
-        track.selectAll("path").data(variants).enter().append("path")
-            .attr("d", triangle)
+        let baseline = -8 ;
+        let widget_width = 10  ;
+        let widget_height = 10  ;
+        let line_height = 100 ;
+        let apath = "M 0 10 L -10 0 L 10 0 L 0 10 0 -100";
+        let path = "M 0 "+widget_width + " L -"+widget_width+" "+baseline +" L "+widget_width +"  "+baseline +" L 0 "+widget_height +" 0 -"+line_height;
+        console.log(apath)
+        console.log(path)
+
+        let variant_triangles = track.selectAll("path").data(variants).enter()
+            .append("path")
+            .attr("d", path)
             .attr("class", "global-variant")
-            .attr("stroke", "red")
+            .attr("stroke", "blue")
             .attr("fill", "red")
+            .attr("opacity", "0.5")
             .attr("transform", function(d) {
                 return "translate(" + x(d.fmin) + "," + 10 + ")";
-            })
-            .append("line")
-            .attr("x1", 0)
-            .attr("y1", 0)
-            .attr("y2", 10)
-            .attr("x2", 0)
-            .attr("class", "global-variant")
-            .attr("stroke", "black")
-            .attr("stroke-width", 4)
-            .attr("fill", "gray")
-            .attr("transform", function(d) {
-                return "translate(" + x(d.fmin) + "," + 10 + ")";
-            })
-        ;
-        // track.selectAll("path").data(variants).enter()
+            }) ;
+        // variant_triangles.selectAll("path").dataenter().append("line")
+        // // track.selectAll("path").data(variants).enter().append("line")
+        //     .attr("x1", 0)
+        //     .attr("y1", 10)
+        //     .attr("y2", -10)
+        //     .attr("x2", 0)
+        //     // .attr("class", "global-variant")
+        //     .attr("stroke", "black")
+        //     .attr("stroke-width", 2)
+        //     .attr("fill", "gray")
+        //     .attr("transform", function(d) {
+        //         return "translate(" + x(d.fmin) + "," + 10 + ")";
+        //     });
 
     }
 
