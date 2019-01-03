@@ -41,7 +41,6 @@ export default class Drawer {
         if(locale === "local"){
             width  = document.body.clientWidth;
             // Other setup
-            let labelOffset = LABEL_OFFSET ;
             draggingViewer = evt => this.dragged(this);
             draggingStart = evt => this.drag_start(this);
             // Setting our clip path view to enable the scrolling effect
@@ -49,8 +48,8 @@ export default class Drawer {
             .append("rect").attr("id","clip-rect")
             .attr("x", "0").attr("y", "0")
             .attr("height", height)
-            .attr("width", this.gfc["width"] - labelOffset)
-            .attr("transform", "translate(" + labelOffset + ",0)");
+            .attr("width", this.gfc["width"] - LABEL_OFFSET)
+            .attr("transform", "translate(" + LABEL_OFFSET + ",0)");
             viewer.attr("clip-path", "url(#clip)");
         }
 
