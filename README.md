@@ -42,6 +42,40 @@ E.g., http://someserver.org/apollo/track/Honeybee/Official%20Gene%20Set%20v3.2/G
 Example Usage
 =============
 
+From an example ReactJS environment (also working in VueJS and demo is in VanillaJS).  Height is calculated on the fly for 'global' isoform tracks. 
+
+```
+    let transcriptTypes = getTranscriptTypes();
+    const configGlobal = {
+      'locale': 'global',
+      'chromosome': chromosome,
+      'start': fmin,
+      'end': fmax,
+      'transcriptTypes':transcriptTypes,
+      'tracks': [
+        {
+          'id': 1,
+          'genome': this.props.species,
+          'type': 'isoform',
+          'url': [
+            this.trackDataUrl,
+            '/All%20Genes/',
+            `.json${nameSuffixString}`
+          ]
+        },
+      ]
+    };
+    new GenomeFeatureViewer(configGlobal, 'genome-feature', 900, undefined);
+```
+
+```
+<div id='genome-feature'></div>
+```
+
+Result:
+
+![Example 1](images/ExampleIsoform1.png)
+
 
 
 Long Term Goal
