@@ -90,7 +90,7 @@ function findRange(data, display_feats)
       let featureChildren = feature.children;
       if(featureChildren){
           featureChildren.forEach(function (featureChild) {
-              if (display_feats.indexOf(featureChild.type)>=0){
+              if (display_feats.indexOf(featureChild.type) >= 0) {
                   if (fmin < 0 || featureChild.fmin < fmin) {
                       fmin = featureChild.fmin;
                   }
