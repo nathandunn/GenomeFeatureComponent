@@ -45,8 +45,8 @@ export default class IsoformAndVariantTrack {
     let display_feats = this.transcriptTypes;
     let dataRange = findRange(isoformData, display_feats);
 
-    let view_start = dataRange.fmin;
-    let view_end = dataRange.fmax;
+    let viewStart = dataRange.fmin;
+    let viewEnd = dataRange.fmax;
 
     // constants
     const EXON_HEIGHT = 10; // will be white / transparent
@@ -80,7 +80,7 @@ export default class IsoformAndVariantTrack {
     };
 
     let x = d3.scaleLinear()
-      .domain([view_start, view_end])
+      .domain([viewStart, viewEnd])
       .range([0, width]);
 
     //Lets put this here so that the "track" part will give us extra space automagically
@@ -125,7 +125,7 @@ export default class IsoformAndVariantTrack {
     // **************************************
     // Seperate isoform and variant render
     // **************************************
-      let variantBins = generateVariantDataBinsAndDataSets(variantData);
+      let variantBins = generateVariantDataBinsAndDataSets(variantData,viewEnd-viewStart);
 
       variantBins.forEach(variant => {
         let {type, fmax, fmin} = variant;
