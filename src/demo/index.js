@@ -32,6 +32,7 @@ function flyExamples() {
     createExample("2R:23974973..23989002", "fly", "viewerFlyExample3NoLabel", TRACK_TYPE.ISOFORM_EMBEDDED_VARIANT, false, ['NT_033778.4:g.23975146T>C']);
     createExample("2R:23974973..23989002", "fly", "viewerFlyExample2NoLabel", TRACK_TYPE.ISOFORM_EMBEDDED_VARIANT, false);
     createExample("2R:23974973..23989002", "fly", "viewerFlyExample2NoLabelAnd", TRACK_TYPE.ISOFORM_AND_VARIANT, false);
+    createExample("2R:23974973..23989002", "fly", "viewerFlyExample2NoLabelAndFilterTest", TRACK_TYPE.ISOFORM_AND_VARIANT, false);
 }
 
 function ratExamples() {
@@ -135,6 +136,9 @@ function createExample(range, genome, divId, type, showLabel, variantFilter) {
     if(divId==='viewerMouseExample6'){
       gfc.setSelectedAlleles(["MGI:6366485"])
     }
+  if(divId==='viewerFlyExample2NoLabelAndFilterTest'){
+    gfc.setVisibleAlleles(["FB:FBal0161449","FB:FBal0216624","FB:FBal0242676"])
+  }
 }
 
 

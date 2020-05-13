@@ -29,6 +29,7 @@ export default class GenomeFeatureViewer {
 
         this.viewer = this._initViewer(svg_target);
         this.drawer = new Drawer(this);
+        this.visible_alleles = undefined;
         this.drawer.draw();
     }
 
@@ -49,8 +50,12 @@ export default class GenomeFeatureViewer {
        console.log('selected alleles are being set',selectedAlleles)
     }
 
+    setVisibleAlleles(visibleAlleles){
+      // TODO: for @pjhale
+      console.log('visible alleles are being set',visibleAlleles)
+    }
 
-    // Check configuration files
+  // Check configuration files
     _checkConfig(config) {
         // Ensure we have config type
         // TODO: Make sure we have top label information
